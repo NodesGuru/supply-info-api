@@ -82,10 +82,16 @@ async function updateData() {
     //  url: `${process.env.REST_API_ENDPOINT}/cosmos/mint/v1beta1/inflation`,
     //});
 
+    // Get Crescent APR
+    crescent_apr = await axios({
+      method: "get",
+      url: `https://apigw.crescent.network/stake/live`,
+    });
+
     totalStaked = stakingInfo.data.pool.bonded_tokens;
     bondedRatio = totalStaked / totalSupply.data.amount.amount;
     //apr = inflation?.data.inflation / bondedRatio;
-    apr = 58;
+    apr = crescent_apr.data.data.apr;
 
     console.log("APR: ", apr);
     console.log("Total Staked: ", totalStaked);

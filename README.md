@@ -46,7 +46,7 @@ echo "VESTING_ACCOUNTS=$(cat vesting_accounts)" >> ~/supply-info-api/.env
 > :warning: **Do not forget to install NodeJS** and (optional) Yarn
 ```bash
 cd ~/supply-info-api
-yarn # or npm run install
+yarn # or npm install
 yarn start # or npm run start
 ```
 Press `Ctrl + C` to exit.

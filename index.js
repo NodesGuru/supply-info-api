@@ -77,14 +77,15 @@ async function updateData() {
     });
 
     // Get inflation
-    inflation = await axios({
-      method: "get",
-      url: `${process.env.REST_API_ENDPOINT}/cosmos/mint/v1beta1/inflation`,
-    });
+    //inflation = await axios({
+    //  method: "get",
+    //  url: `${process.env.REST_API_ENDPOINT}/cosmos/mint/v1beta1/inflation`,
+    //});
 
     totalStaked = stakingInfo.data.pool.bonded_tokens;
     bondedRatio = totalStaked / totalSupply.data.amount.amount;
-    apr = inflation.data.inflation / bondedRatio;
+    //apr = inflation?.data.inflation / bondedRatio;
+    apr = 58;
 
     console.log("APR: ", apr);
     console.log("Total Staked: ", totalStaked);

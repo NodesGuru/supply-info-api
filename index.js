@@ -141,7 +141,7 @@ app.get("/", async (req, res) => {
   res.json({
     apr,
     bondedRatio,
-    circulatingSupply: Decimal.fromAtomics(circulatingSupply.toString(), 6).toString(),
+    circulatingSupply: Decimal.fromAtomics(circulatingSupply, 6).toString(),
     communityPool: Decimal.fromAtomics(
       communityPoolMainDenomTotal.split(".")[0],
       6
@@ -164,7 +164,7 @@ app.get("/bonded-ratio", async (req, res) => {
 });
 
 app.get("/circulating-supply", async (req, res) => {
-  res.send(Decimal.fromAtomics(circulatingSupply.toString(), 6).toString());
+  res.send(Decimal.fromAtomics(circulatingSupply, 6).toString());
 });
 
 app.get("/total-staked", async (req, res) => {

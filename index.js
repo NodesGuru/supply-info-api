@@ -85,7 +85,7 @@ async function updateData() {
     // Get Crescent APR
     crescent_apr = await axios({
       method: "get",
-      url: `https://apigw.crescent.network/stake/live`,
+      url: `https://apigw-v2.crescent.network/stake/live`,
     });
 
     totalStaked = stakingInfo.data.pool.bonded_tokens;

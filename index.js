@@ -60,9 +60,13 @@ async function updateData() {
     // Get total supply
     totalSupply = await axios({
       method: "get",
-      url: `${process.env.REST_API_ENDPOINT}/cosmos/bank/v1beta1/supply/${denom}`,
+      url: `${process.env.REST_API_ENDPOINT}/cosmos/bank/v1beta1/supply`,
     });
-    console.log("Total supply: ", totalSupply.data.amount.amount);
+    totalSupply.data.supply.filter(function (k,v) {
+      totalSupply = (k.denom === `${denom}`) ? k.amount : 0
+      return totalSupply
+    })
+    console.log("Total supply: ", totalSupply)
 
     // Get community pool
     communityPool = await axios({
@@ -83,7 +87,7 @@ async function updateData() {
     });
 
     totalStaked = stakingInfo.data.pool.bonded_tokens;
-    bondedRatio = totalStaked / totalSupply.data.amount.amount;
+    bondedRatio = totalStaked / totalSupply;
     apr = inflation.data.inflation / bondedRatio;
 
     console.log("APR: ", apr);
@@ -99,7 +103,7 @@ async function updateData() {
 
         // Subtract community pool from total supply
         tmpCirculatingSupply =
-          totalSupply.data.amount.amount - communityPool.data.pool[i].amount;
+          totalSupply - communityPool.data.pool[i].amount;
       }
     }
 
@@ -148,7 +152,7 @@ app.get("/", async (req, res) => {
     denom: denom.substring(1).toUpperCase(),
     totalStaked: Decimal.fromAtomics(totalStaked, 6).toString(),
     totalSupply: Decimal.fromAtomics(
-      totalSupply.data.amount.amount,
+      totalSupply,
       6
     ).toString(),
   });
@@ -171,7 +175,7 @@ app.get("/total-staked", async (req, res) => {
 });
 
 app.get("/total-supply", async (req, res) => {
-  res.send(Decimal.fromAtomics(totalSupply.data.amount.amount, 6).toString());
+  res.send(Decimal.fromAtomics(totalSupply, 6).toString());
 });
 
 app.get("/community-pool", async (req, res) => {

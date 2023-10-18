@@ -60,7 +60,7 @@ async function updateData() {
     // Get total supply
     totalSupply = await axios({
       method: "get",
-      url: `${process.env.REST_API_ENDPOINT}/cosmos/bank/v1beta1/supply`,
+      url: `${process.env.REST_API_ENDPOINT}/cosmos/bank/v1beta1/supply?pagination.limit=100000`,
     });
     totalSupply.data.supply.filter(function (k,v) {
       totalSupply = (k.denom === `${denom}`) ? k.amount : 0
